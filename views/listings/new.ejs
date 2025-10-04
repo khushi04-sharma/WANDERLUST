@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WanderLust</title>
+  </head>
+  <body>
+    <% layout("/layouts/boilerplate") %>
+    <div class="row">
+      <br>
+      <br>
+      <div class="col-8 offset-2">
+        <h3>Create a New Listing</h3>
+        <form method="POST" action="/listings">
+
+          <div class="mb-3">
+            <label name="title" class="form-label">Title</label>
+            <input 
+            name="listing[title]" 
+            placeholder="Add a catchy title" 
+            type="text" 
+            class="form-control"/>
+          </div>
+
+
+          <div class="mb-3">
+            <label name="desciption" class="form-label">Description</label>  
+            <textarea
+              name="listing[description]"
+              class="form-control"
+            ></textarea>
+          </div>
+
+
+          <div class="mb-3">
+            <label name="image" class="form-label">Image Link</label>
+            <input
+            name="listing[image]"
+            placeholder="enter image URL/Link"
+            type="text"
+            class="form-control"
+          />
+          </div>
+
+          <div class="row">
+
+            <div class="mb-3 col-md-4">
+            <label name="price" class="form-label">Price</label>
+            <input 
+            name="listing[price]" 
+            placeholder="1240" 
+            type="number" 
+            class="form-control"/>
+            </div>
+
+
+            <div class="mb-3 col-md-8">
+              <label name="country" class="form-label">Country</label>
+              <input name="listing[country]" 
+                placeholder="India" 
+                type="text" 
+                class="form-control"/>
+            </div>
+          </div>
+          
+
+          <div class="mb-3">
+            <label name="location" class="form-label">Location</label>
+            <input
+            name="listing[location]"
+            placeholder="kalyani,west bengal"
+            type="text"class="form-control"
+            />
+          </div>
+
+          <button class="btn btn-dark add-btn">Add</button>
+          <br>
+          <br>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
