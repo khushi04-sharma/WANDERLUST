@@ -1,16 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Wanderlust</title>
-  </head>
-  <body>
+
     <% layout("/layouts/boilerplate") %>
     <div class="row mt-3">
       <div class="col-8 offset-2">
     <h3>Edit your Listing</h3>
-    <form method="POST" action="/listings/<%= listing._id %>?_method=PUT">
+    <form class="needs-validation" method="POST" action="/listings/<%= listing._id %>?_method=PUT" novalidate>
       
       <div class="col-8 offset-2">
       <h3>Create a New Listing</h3>
@@ -22,15 +15,22 @@
           name="listing[title]" 
           value="<%= listing.title %>" 
           type="text" 
-          class="form-control"/>
+          class="form-control"
+          required/>
+          <div class="invalid-feedback">
+          kya mtlb title nhi dena h :(
+        </div>
         </div>
 
         <div class="mb-3">
           <label name="description" class="form-label">Description</label>
           <textarea name="listing[description]"
-          class="form-control">
+          class="form-control" required>
           <%= listing.description %>
           </textarea>
+          <div class="invalid-feedback">
+          Please enter description!
+        </div>
         </div>
 
         <div class="mb-3">
@@ -39,7 +39,10 @@
           name="listing[image]" 
           value="<%= listing.image %>" 
           type="text" 
-           class="form-control"/>
+          class="form-control" required/>
+          <div class="invalid-feedback">
+          Image should have to be added!
+        </div>
         </div>
         <div class="row">
         <div class="mb-3 col-md-4">
@@ -48,7 +51,10 @@
           name="listing[price]" 
           value="<%= listing.price %>" 
           type="number" 
-           class="form-control"/>
+           class="form-control" required/>
+           <div class="invalid-feedback">
+          Enter price!
+        </div>
         </div>
  
         <div class="mb-3 col-md-8">
@@ -58,7 +64,12 @@
           value="<%= listing.country %>"
           type="text"
            class="form-control"
+           required
+           
          />
+         <div class="invalid-feedback">
+         Enter country!
+        </div>
         </div>
         </div>
 
@@ -69,7 +80,10 @@
           value="<%= listing.location %>"
           type="text"
            class="form-control"
+           required
          />
+         <div class="invalid-feedback">
+          Please provide a valid location.
         </div>
 
 
@@ -79,5 +93,4 @@
     </form>
     </div>
     </div>
-  </body>
-</html>
+  <script src="/js/script.js"></script>

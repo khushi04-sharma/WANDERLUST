@@ -1,35 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>WanderLust</title>
-  </head>
-  <body>
+
     <% layout("/layouts/boilerplate") %>
+
     <div class="row">
       <br>
       <br>
       <div class="col-8 offset-2">
         <h3>Create a New Listing</h3>
-        <form method="POST" action="/listings">
+        <form class="needs-validation" novalidate action="/listings" method="POST">
 
           <div class="mb-3">
-            <label name="title" class="form-label">Title</label>
+            <label for="title" class="form-label">Title</label>
             <input 
-            name="listing[title]" 
-            placeholder="Add a catchy title" 
-            type="text" 
-            class="form-control"/>
+            type="text"
+            class="form-control"
+            id="title"
+            name="listing[title]"
+            required
+            />
+              <div class="valid-feedback">
+                Title looks good! ;)
+              </div>
           </div>
-
 
           <div class="mb-3">
             <label name="desciption" class="form-label">Description</label>  
             <textarea
-              name="listing[description]"
-              class="form-control"
+            class="form-control"
+            id="description"
+            name="listing[description]"
+            required
             ></textarea>
+            <div class="invalid-feedback">
+                please enter description!
+              </div>
           </div>
 
 
@@ -48,10 +51,14 @@
             <div class="mb-3 col-md-4">
             <label name="price" class="form-label">Price</label>
             <input 
-            name="listing[price]" 
-            placeholder="1240" 
-            type="number" 
-            class="form-control"/>
+            type="number"
+            class="form-control"
+            id="price"
+            name="listing[price]"
+            required/>
+            <div class="invalid-feedback">
+                price should be valid! :/
+              </div>
             </div>
 
 
@@ -60,7 +67,11 @@
               <input name="listing[country]" 
                 placeholder="India" 
                 type="text" 
-                class="form-control"/>
+                class="form-control"
+                required/>
+                <div class="invalid-feedback">
+                please enter the country name :)
+              </div>
             </div>
           </div>
           
@@ -71,7 +82,11 @@
             name="listing[location]"
             placeholder="kalyani,west bengal"
             type="text"class="form-control"
+            required
             />
+            <div class="valid-feedback">
+                location should be valid! ')'
+              </div>
           </div>
 
           <button class="btn btn-dark add-btn">Add</button>
@@ -80,5 +95,3 @@
         </form>
       </div>
     </div>
-  </body>
-</html>
