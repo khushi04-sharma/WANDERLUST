@@ -8,6 +8,7 @@ const methodOverride=require("method-override");
 const ejsMate=require("ejs-mate");
 const wrapAsync=require("./utils/wrapAsync.js"); 
 const ExpressError=require("./utils/ExpressError.js"); 
+const {listingSchema}=require("./schema.js");
 
 app.set("view engine","ejs");
 app.set("views",path.join(__dirname,"/views"));
@@ -47,6 +48,16 @@ app.get("/",(req,res)=>{
     res.send("hi,i am root");
 });
 
+const validateListing=(req,res,next)=>{
+  let {error}=listingSchema.validate(req.body);
+  if(error){
+    let errMsg=error.details.map((el)=>el.message).join(",");
+    throw new ExpressError(400,errMsg);
+  }else{
+    next();
+  }
+}
+
 //Index Route
 app.get("/listings", wrapAsync(async (req, res) => {
   const allListings = await Listing.find({});
@@ -64,10 +75,22 @@ app.get("/listings/:id", wrapAsync(async (req, res) => {
   
 }));
 
-app.post("/listings", wrapAsync(async (req, res,next) => {
-    if(!req.body.listing) {
-      throw new ExpressError(400,"Invalid Listing Data");
-    }
+app.post("/listings", validateListing,
+  wrapAsync(async (req, res,next) => {
+    // if(!req.body.listing) {
+    //   throw new ExpressError(400,"Invalid Listing Data");
+    // }
+    // if (!newListing.title) {
+    //     throw new ExpressError(400, "Title is missing!");
+    // }
+
+    // if (!newListing.description) {
+    //     throw new ExpressError(400, "Description is missing!");
+    // }
+
+    // if (!newListing.location) {
+    //     throw new ExpressError(400, "Location is missing!");
+    // }
     const newListing = new Listing(req.body.listing);
     await newListing.save();
     res.redirect("/listings");
@@ -79,10 +102,7 @@ app.get("/listings/:id/edit",wrapAsync(async (req, res) => {
   res.render("listings/edit.ejs", { listing });
 }));
 
-app.put("/listings/:id", wrapAsync(async (req, res) => {
-  if(!req.body.listing) {
-    throw new ExpressError(400,"Invalid Listing Data");
-  }
+app.put("/listings/:id",validateListing, wrapAsync(async (req, res) => {
   let { id } = req.params;
   await Listing.findByIdAndUpdate(id, {...req.body.listing });
   res.redirect(`/listings/${id}`);
@@ -101,7 +121,8 @@ app.all(/.*/, (req, res, next) => {
 
 app.use((err, req, res, next) => {
   let { statusCode = 500, message = "something went wrong!" } = err;
-  res.status(statusCode).send(message);
+  res.status(statusCode).render("error.ejs",{message});
+  //res.status(statusCode).send(message);
 });
 
 app.listen(8080, () => {
